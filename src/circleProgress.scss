@@ -1,0 +1,52 @@
+.circleProgress_wrap {
+	width: 200px;
+	height: 200px;
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: white;
+
+	& .wrapper {
+		width: 100px;
+		height: 200px;
+		position: absolute;
+		top: 0;
+		overflow: hidden;
+
+		&--right {
+			right: 0;
+		}
+
+		&--left {
+			left: 0;
+		}
+
+		& .circleProgress {
+			width: 180px;
+			height: 180px;
+			border: 10px solid transparent;
+			border-radius: 50%;
+			position: absolute;
+			top: 15px;
+
+			&--left {
+				border-bottom: 10px solid green;
+				border-left: 10px solid green;
+				left: 15px;
+			}
+
+			&--right {
+				border-top: 10px solid green;
+				border-right: 10px solid green;
+				right: 15px;
+			}
+		}
+	}
+}
+
+.text-postDate {
+	color: #434449;
+}

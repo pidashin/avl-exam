@@ -1,0 +1,197 @@
+@media (min-width: 0) {
+	.sidebar {
+		height: 250px;
+	}
+}
+
+@media (min-width: 576px) {
+	.sidebar {
+		height: 100vh;
+	}
+}
+
+.sidebar {
+    background-color: #1c1d20;
+}
+
+.main {
+	background-color: #22252a;
+}
+
+@mixin gradient1 {
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#319cf9+0,88fcfc+100 */
+	background: #319cf9; /* Old browsers */
+	background: -moz-linear-gradient(
+		left,
+		#319cf9 0%,
+		#88fcfc 100%
+	); /* FF3.6-15 */
+	background: -webkit-linear-gradient(
+		left,
+		#319cf9 0%,
+		#88fcfc 100%
+	); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(
+		to right,
+		#319cf9 0%,
+		#88fcfc 100%
+	); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#319cf9', endColorstr='#88fcfc',GradientType=1 ); /* IE6-9 */
+}
+
+.show {
+	& .gradientWrap {
+		@include gradient1;
+		padding: 1px;
+		border-radius: 1.25rem;
+	}
+
+	& .gradientTxt {
+		@include gradient1;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	& .btn-gradient {
+		background-color: #22252a;
+		border: 0;
+
+		&:hover {
+			background-color: #22252a;
+		}
+
+		&.dropdown-toggle {
+			&::after {
+				border-top-color: white;
+			}
+		}
+	}
+}
+
+.btn-gradient {
+	border: 1px solid white;
+	color: white;
+	background-color: transparent;
+	border-radius: 1.25rem;
+
+	&:hover {
+		color: white;
+		background-color: transparent;
+	}
+
+	&.dropdown-toggle {
+		&::after {
+			border-top-color: #88fcfc;
+		}
+	}
+}
+
+.content {
+	background-color: #22252a;
+	box-shadow: 0 0 15px 15px black;
+	padding: 20px 55px;
+	margin-top: 15px;
+	color: white;
+}
+
+.btn-formula {
+	background-color: black;
+	color: white;
+	border-radius: 1.25rem;
+
+	& > i {
+		@include gradient1;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+}
+
+.border-gray {
+	border-color: #22252a;
+}
+
+.btn-hashTag {
+	@include gradient1;
+	opacity: 0.7;
+	border: 0;
+	color: white;
+
+	&:hover {
+		opacity: 1;
+		color: white;
+	}
+}
+
+.inputWrap {
+	padding: 1px;
+	background-color: #33343a;
+	border-radius: 0.75rem;
+
+	&-focus {
+		@include gradient1;
+	}
+
+	&-inner {
+		background-color: #2d2e34;
+		width: 60px;
+		height: 60px;
+		padding: 10px 15px;
+		box-sizing: border-box;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.75rem;
+	}
+
+	input {
+		color: #1fbdbd;
+		background-color: transparent;
+		border: 0;
+		padding-left: 3px;
+		border-bottom: 1px solid #808285;
+		height: 100%;
+		width: 100%;
+
+		&:focus {
+			outline: none;
+		}
+
+		&-hasVal {
+			border: 0;
+		}
+	}
+}
+
+.submitBtnWrap {
+    padding: 1px;
+    @include gradient1;
+    border-radius: 1.25rem;
+
+    &-disabled {
+        opacity: .7;
+    }
+}
+
+.btn-submit {
+	background-color: #22252a;
+    color: white;
+    width: 100px;
+
+	
+	// -webkit-background-clip: text;
+	// -webkit-text-fill-color: transparent;
+	// border: 1px solid transparent;
+	// border-image: linear-gradient(to right, #319cf9 0%, #88fcfc 100%);
+	// border-image-slice: 1;
+	border-radius: 1.25rem;
+
+	&:hover {
+		color: white;
+    }
+    
+    &:disabled {
+        @include gradient1;
+        opacity: .7;
+    }
+}

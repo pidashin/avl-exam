@@ -188,11 +188,6 @@ const App = () => {
 										</Dropdown.Item>
 									)
 								})}
-								{/* <Dropdown.Item href="#/action-1">All Topics</Dropdown.Item>
-								<Dropdown.Item href="#/action-2">Algebra</Dropdown.Item>
-								<Dropdown.Item href="#/action-3">Grometry</Dropdown.Item>
-								<Dropdown.Item href="#/action-3">Trignometry</Dropdown.Item>
-								<Dropdown.Item href="#/action-3">Arthmetic</Dropdown.Item> */}
 							</Dropdown.Menu>
 						</Dropdown>
 
@@ -202,9 +197,24 @@ const App = () => {
 									<span className="gradientTxt">Popular</span>
 								</Dropdown.Toggle>
 							</div>
-							<Dropdown.Menu>
+							<Dropdown.Menu className="w-auto">
 								<Dropdown.Header>Dropdown header</Dropdown.Header>
-								<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+								<Dropdown.Item>
+									<div>
+										<p className="text-white-50">Calculator</p>
+										<Row className="flex-nowrap">
+											<div className="gradientBtnWrap">
+												<Button variant="dropDown" className="mr-2">All</Button>
+											</div>
+											<div className="gradientBtnWrap">
+												<Button variant="dropDown" className="mr-2">Calculator</Button>
+											</div>
+											<div className="gradientBtnWrap">
+												<Button variant="dropDown">No Calculator</Button>
+											</div>
+										</Row>
+									</div>
+								</Dropdown.Item>
 								<Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
 								<Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
 							</Dropdown.Menu>

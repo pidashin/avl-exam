@@ -214,3 +214,19 @@
         }
     }
 }
+
+.gradientBtnWrap {
+    padding: 1px;
+    @include gradient1;
+    border-radius: 1.25rem;
+}
+
+
+.btn-dropDown {
+    color: white;
+    border-radius: 1.25rem;
+
+    &:hover {
+        color: white;
+    }
+}

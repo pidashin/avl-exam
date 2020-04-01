@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState, useMemo } from 'react'
 import './App.scss'
 import { Row, Col, Dropdown, Button } from 'react-bootstrap'
 import CircleProgress from './circleProgress'
@@ -61,9 +61,37 @@ const lineData = {
 	}
 }
 
-const CustomInput = ({ className = '', ...rest }) => {
+const CustomInput = ({
+	className = '',
+	defaultFocus,
+	onChange,
+	value,
+	...rest
+}) => {
 	const inputRef = useRef(),
 		wrapRef = useRef()
+
+	const handleChange = e => {
+		const val = e.target.value
+
+		if (/[^0-9./]/.test(val) || val.length > 1) {
+			console.log('invalid', val)
+			return
+		}
+
+		onChange(val)
+	}
+
+	const handleFocus = () => {
+		inputRef.current.classList.remove('hasVal')
+		wrapRef.current.classList.add('inputWrap-focus')
+	}
+
+	useEffect(() => {
+		if (defaultFocus) {
+			inputRef.current.focus()
+		}
+	}, [defaultFocus])
 
 	return (
 		<div ref={wrapRef} className={`inputWrap ${className}`}>
@@ -71,11 +99,11 @@ const CustomInput = ({ className = '', ...rest }) => {
 				<input
 					ref={inputRef}
 					type="text"
-					className="h1"
+					className={`h1 ${!!value ? 'hasVal' : ''}`}
 					{...rest}
-					onFocus={() => {
-						wrapRef.current.classList.add('inputWrap-focus')
-					}}
+					onChange={handleChange}
+					value={value}
+					onFocus={handleFocus}
 					onBlur={() => {
 						wrapRef.current.classList.remove('inputWrap-focus')
 					}}
@@ -86,6 +114,22 @@ const CustomInput = ({ className = '', ...rest }) => {
 }
 
 const App = () => {
+	const [inputVals, setInputVals] = useState(['', '', '', ''])
+
+	const handleChangeInputFns = useMemo(() => {
+		return [1, 2, 3, 4].map((_, idx) => {
+			return val => {
+				setInputVals(prev => {
+					return prev.map((item, idx2) => {
+						return idx2 === idx ? val : item
+					})
+				})
+			}
+		})
+	}, [])
+
+	const completeInput = inputVals.every(item => !!item)
+
 	return (
 		<div className="container-fluid">
 			<Row>
@@ -94,7 +138,9 @@ const App = () => {
 					<ReportItem title="completed" count="100" />
 					<ReportItem title="correct" count="100" />
 
-					<p className="text-postDate fixed-bottom ml-3">Post 24 Hours, 20200401</p>
+					<p className="text-postDate fixed-bottom ml-3">
+						Post 24 Hours, 20200401
+					</p>
 				</Col>
 
 				<Col className="sidebar d-block d-sm-none">
@@ -106,12 +152,10 @@ const App = () => {
 							<ReportItem title="completed" count="100" />
 							<ReportItem title="correct" count="100" />
 						</Col>
-						
 					</Row>
 				</Col>
 
-				<Col className="main pt-5">
-					
+				<Col className="main pt-5 px-5">
 					<Row>
 						<Dropdown className="col-auto px-0 mr-2">
 							<div className="gradientWrap">
@@ -120,10 +164,11 @@ const App = () => {
 								</Dropdown.Toggle>
 							</div>
 							<Dropdown.Menu>
-								<Dropdown.Header>Dropdown header</Dropdown.Header>
-								<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-								<Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-								<Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+								<Dropdown.Header>Topic</Dropdown.Header>
+								<Dropdown.Item href="#/action-1">All Topics</Dropdown.Item>
+								<Dropdown.Item href="#/action-2">Algebra</Dropdown.Item>
+								<Dropdown.Item href="#/action-3">Grometry</Dropdown.Item>
+								<Dropdown.Item href="#/action-3">Grometry</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
 
@@ -222,10 +267,23 @@ const App = () => {
 							</Col>
 							<Col>
 								<Row className="align-items-center justify-content-center">
-									<CustomInput className="mr-2" placeHolder="1" />
-									<CustomInput className="mr-2" placeHolder="2" />
-									<CustomInput className="mr-2" placeHolder="3" />
-									<CustomInput placeHolder="4" />
+									{inputVals.map((val, idx) => {
+										return (
+											<CustomInput
+												key="idx"
+												className={idx < inputVals.length - 1 ? 'mr-2' : ''}
+												placeholder={idx + 1}
+												defaultFocus={idx === 0}
+												value={val}
+												onChange={handleChangeInputFns[idx]}
+											/>
+										)
+									})}
+								</Row>
+								<Row className="justify-content-end">
+									{
+										completeInput && <p className="text-white-50">Press <span className="text-white">Enter↲</span></p>
+									}
 								</Row>
 							</Col>
 						</Row>
@@ -234,8 +292,8 @@ const App = () => {
 							<div className="submitBtnWrap mr-2">
 								<Button variant="submit">Skip</Button>
 							</div>
-							<div className="submitBtnWrap submitBtnWrap-disabled">
-								<Button variant="submit" disabled={true}>
+							<div className={`submitBtnWrap ${!completeInput ? 'submitBtnWrap-disabled' : ''}`}>
+								<Button variant="submit" disabled={!completeInput}>
 									Submit
 								</Button>
 							</div>

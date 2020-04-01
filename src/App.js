@@ -75,7 +75,6 @@ const CustomInput = ({
 		const val = e.target.value
 
 		if (/[^0-9./]/.test(val) || val.length > 1) {
-			console.log('invalid', val)
 			return
 		}
 
@@ -130,6 +129,18 @@ const App = () => {
 
 	const completeInput = inputVals.every(item => !!item)
 
+	const dropDown1Source = [
+		'All Topics',
+		'Algebra',
+		'Grometry',
+		'Trignometry',
+		'Arthmetic'
+	]
+	const [selectedIdx1, setSelectedIdx1] = useState(0)
+	const handleChangeDropdown1 = idx => {
+		setSelectedIdx1(idx)
+	}
+
 	return (
 		<div className="container-fluid">
 			<Row>
@@ -160,15 +171,28 @@ const App = () => {
 						<Dropdown className="col-auto px-0 mr-2">
 							<div className="gradientWrap">
 								<Dropdown.Toggle variant="gradient">
-									<span className="gradientTxt">Popular</span>
+									<span className="gradientTxt">
+										{dropDown1Source[selectedIdx1]}
+									</span>
 								</Dropdown.Toggle>
 							</div>
 							<Dropdown.Menu>
 								<Dropdown.Header>Topic</Dropdown.Header>
-								<Dropdown.Item href="#/action-1">All Topics</Dropdown.Item>
+								{dropDown1Source.map((item, idx) => {
+									return (
+										<Dropdown.Item
+											key={idx}
+											onClick={() => handleChangeDropdown1(idx)}
+										>
+											{item}
+										</Dropdown.Item>
+									)
+								})}
+								{/* <Dropdown.Item href="#/action-1">All Topics</Dropdown.Item>
 								<Dropdown.Item href="#/action-2">Algebra</Dropdown.Item>
 								<Dropdown.Item href="#/action-3">Grometry</Dropdown.Item>
-								<Dropdown.Item href="#/action-3">Grometry</Dropdown.Item>
+								<Dropdown.Item href="#/action-3">Trignometry</Dropdown.Item>
+								<Dropdown.Item href="#/action-3">Arthmetic</Dropdown.Item> */}
 							</Dropdown.Menu>
 						</Dropdown>
 
@@ -281,9 +305,11 @@ const App = () => {
 									})}
 								</Row>
 								<Row className="justify-content-end">
-									{
-										completeInput && <p className="text-white-50">Press <span className="text-white">Enter↲</span></p>
-									}
+									{completeInput && (
+										<p className="text-white-50">
+											Press <span className="text-white">Enter↲</span>
+										</p>
+									)}
 								</Row>
 							</Col>
 						</Row>
@@ -292,7 +318,11 @@ const App = () => {
 							<div className="submitBtnWrap mr-2">
 								<Button variant="submit">Skip</Button>
 							</div>
-							<div className={`submitBtnWrap ${!completeInput ? 'submitBtnWrap-disabled' : ''}`}>
+							<div
+								className={`submitBtnWrap ${
+									!completeInput ? 'submitBtnWrap-disabled' : ''
+								}`}
+							>
 								<Button variant="submit" disabled={!completeInput}>
 									Submit
 								</Button>
